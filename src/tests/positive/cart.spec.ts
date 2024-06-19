@@ -9,8 +9,7 @@ test.describe('Positive Scenario: Add products to the cart', () => {
                                                storeCPanelLicensePage,
                                                storeConfigurePage,
                                                storeReviewPage,
-                                               storeCheckoutPage,
-                                               page
+                                               storeCheckoutPage
                                            }) => {
         let product = products.CPANEL_ADMIN_CLOUD_FIVE;
         let addon = addons.LITTLE_SPEED_8_GB;
@@ -41,15 +40,15 @@ test.describe('Positive Scenario: Add products to the cart', () => {
         await storeReviewPage.assertProductNameVisible(productName);
         await storeReviewPage.assertProductNameVisible(addon);
 
-        await storeReviewPage.checkPriceRemainingDays(productName);
-        await storeReviewPage.checkPriceRemainingDays(addon);
+        await storeReviewPage.calculatePriceRemainingDays(productName);
+        await storeReviewPage.calculatePriceRemainingDays(addon);
 
         let productDuePrice = await storeReviewPage.getProductDuePrice(product);
         expect(productDuePrice).toEqual(await storeReviewPage.getProductDuePrice(product));
         expect(roundedTotal).toEqual(await storeReviewPage.getProductMonthlyPrice(product));
 
-        let addonDuePrice = await storeReviewPage.checkPriceRemainingDays(addon);
-        expect(addonDuePrice).toEqual(await storeReviewPage.checkPriceRemainingDays(addon));
+        let addonDuePrice = await storeReviewPage.calculatePriceRemainingDays(addon);
+        expect(addonDuePrice).toEqual(await storeReviewPage.calculatePriceRemainingDays(addon));
         expect(addonMonthlyPrice).toEqual(await storeReviewPage.getProductMonthlyPrice(addon));
 
         let orderSummarySubtitle = await storeReviewPage.getSummarySubtotal();

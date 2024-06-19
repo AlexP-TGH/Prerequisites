@@ -22,7 +22,7 @@ export class StoreReviewPage {
         return {name, price, priceMonthly};
     }
 
-    async checkPriceRemainingDays(productName: string): Promise<string> {
+    async calculatePriceRemainingDays(productName: string): Promise<string> {
         const currentDate = new Date();
         const currentDay = currentDate.getDate();
         const totalDaysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();

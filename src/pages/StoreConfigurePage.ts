@@ -5,23 +5,21 @@ export class StoreConfigurePage {
     private ipAddressInput = (): string => '//div[@class="form-group"]/input[@type="text"]';
     private summaryContinueButton = (): string => '//button[@id="btnCompleteProductConfig"]';
 
-    public checkboxLocator = (name: string): string => `//label[normalize-space(.)="${name}"]`;
-    public priceLocator = (): string => '../..//div[@class="panel-price"]';
-    public addButtonLocator = (): string => '../..//div[@class="panel-add"]';
+    private checkboxLocator = (name: string): string => `//label[normalize-space(.)="${name}"]`;
+    private priceLocator = (): string => '../..//div[@class="panel-price"]';
 
-    public createProduct = (name: string): string => `//span[contains(normalize-space(), "${name}")]`;
-    public createOrder = (name: string): string => `${this.createProduct(name)}/../span[@class="pull-right float-right"]`;
+    private createProduct = (name: string): string => `//span[contains(normalize-space(), "${name}")]`;
+    private createOrder = (name: string): string => `${this.createProduct(name)}/../span[@class="pull-right float-right"]`;
 
     constructor(page: Page) {
         this.page = page;
     }
 
-    private createAddonLocators(name: string): { checkbox: Locator; price: Locator; addButton: Locator } {
+    private createAddonLocators(name: string): { checkbox: Locator; price: Locator } {
         const checkbox = this.page.locator(this.checkboxLocator(name));
         const price = checkbox.locator(this.priceLocator());
-        const addButton = checkbox.locator(this.addButtonLocator());
 
-        return {checkbox, price, addButton};
+        return {checkbox, price};
     }
 
     async fillIPAddressInput(ip: string) {
@@ -39,11 +37,6 @@ export class StoreConfigurePage {
         const priceText = await locators.price.textContent();
 
         return priceText.replace(/[^\d.]/g, '');
-    }
-
-    async clickAddonAddButton(name: string) {
-        const locators = this.createAddonLocators(name);
-        await locators.addButton.click();
     }
 
     async getOrderPrice(name: string): Promise<string> {
