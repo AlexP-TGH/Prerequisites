@@ -3,21 +3,21 @@ import {expect, Locator, Page} from '@playwright/test';
 export class StoreReviewPage {
     private page: Page;
 
-    private static orderSummarySubtotalSelector = () => '//span[@id="subtotal"]';
-    private static orderCheckoutButtonSelector = () => '//a[@id="checkout"]';
-    private static productNameSelector = (productName: string) => `//div[@class="item"]//span[normalize-space(text())="${productName}"]`;
+    private orderSummarySubtotalSelector = () => '//span[@id="subtotal"]';
+    private orderCheckoutButtonSelector = () => '//a[@id="checkout"]';
+    private productNameSelector = (productName: string) => `//div[@class="item"]//span[normalize-space(text())="${productName}"]`;
 
-    private static productPriceSelector = (productName: string): string => `${StoreReviewPage.productNameSelector(productName)}/ancestor::div[@class="item"]//div[contains(@class, "item-price")]/span[1]`;
-    private static productPriceMonthlySelector = (productName: string): string => `${StoreReviewPage.productNameSelector(productName)}/ancestor::div[@class="item"]//div[contains(@class, "item-price")]/span[2]`;
+    private productPriceSelector = (productName: string): string => `${this.productNameSelector(productName)}/ancestor::div[@class="item"]//div[contains(@class, "item-price")]/span[1]`;
+    private productPriceMonthlySelector = (productName: string): string => `${this.productNameSelector(productName)}/ancestor::div[@class="item"]//div[contains(@class, "item-price")]/span[2]`;
 
     constructor(page: Page) {
         this.page = page;
     }
 
-    private getProductLocators(productName: string): { [key: string]: Locator } {
-        const name = this.page.locator(StoreReviewPage.productNameSelector(productName));
-        const price = this.page.locator(StoreReviewPage.productPriceSelector(productName));
-        const priceMonthly = this.page.locator(StoreReviewPage.productPriceMonthlySelector(productName));
+    private getProductLocators(productName: string): { name: Locator; price: Locator; priceMonthly: Locator } {
+        const name = this.page.locator(this.productNameSelector(productName));
+        const price = this.page.locator(this.productPriceSelector(productName));
+        const priceMonthly = this.page.locator(this.productPriceMonthlySelector(productName));
 
         return {name, price, priceMonthly};
     }
@@ -54,13 +54,13 @@ export class StoreReviewPage {
     }
 
     async getSummarySubtotal(): Promise<string> {
-        const subtotalText = await this.page.locator(StoreReviewPage.orderSummarySubtotalSelector()).textContent();
+        const subtotalText = await this.page.locator(this.orderSummarySubtotalSelector()).textContent();
 
         return subtotalText ? subtotalText.replace(/[^\d.]/g, '') : '';
     }
 
     async clickOrderCheckoutButton() {
-        await this.page.waitForSelector(StoreReviewPage.orderCheckoutButtonSelector());
-        await this.page.locator(StoreReviewPage.orderCheckoutButtonSelector()).click();
+        await this.page.waitForSelector(this.orderCheckoutButtonSelector());
+        await this.page.locator(this.orderCheckoutButtonSelector()).click();
     }
 }

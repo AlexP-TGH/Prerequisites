@@ -19,7 +19,7 @@ test.describe('Positive Scenario: Add products to the cart', () => {
         let ipAddress = '2.2.2.2';
 
 
-        await homePage.clockGotoHomePage();
+        await homePage.clickGotoHomePage();
         await homePage.assertLoginButtonVisible();
 
         await homePage.clickBrowseCPanelLicense();
