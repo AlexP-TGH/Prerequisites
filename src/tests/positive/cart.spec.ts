@@ -5,12 +5,12 @@ import addons from "../../data/addons";
 test.describe('Positive Scenario: Add products to the cart', () => {
 
     test('Check product\'s prices', async ({
-                                               homePage,
-                                               storeCPanelLicensePage,
-                                               storeConfigurePage,
-                                               storeReviewPage,
-                                               storeCheckoutPage
-                                           }) => {
+                                                            homePage,
+                                                            storeCPanelLicensePage,
+                                                            storeConfigurePage,
+                                                            storeReviewPage,
+                                                            storeCheckoutPage
+                                                     }) => {
         let product = products.CPANEL_ADMIN_CLOUD_FIVE;
         let addon = addons.LITTLE_SPEED_8_GB;
         let ipAddress = '2.2.2.2';
