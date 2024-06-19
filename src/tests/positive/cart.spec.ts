@@ -3,8 +3,6 @@ import products from "../../data/products";
 import addons from "../../data/addons";
 
 test.describe('Positive Scenario: Add products to the cart', () => {
-    test.beforeEach(async ({page}) => {
-    })
 
     test('Check product\'s prices', async ({
                                                homePage,
