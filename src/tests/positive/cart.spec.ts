@@ -26,15 +26,13 @@ test.describe('Positive Scenario: Add products to the cart', () => {
 
         await storeConfigurePage.fillIPAddressInput(ipAddress);
 
-        let orderSummaryMonthly = await storeConfigurePage.getOrderPrice('Monthly');
         let addonMonthlyPrice = await storeConfigurePage.getAddonPrice(addon);
         await storeConfigurePage.clickAddonCheckbox(addon);
 
         const totalAmount = parseFloat(productMonthlyPrice) + parseFloat(addonMonthlyPrice);
         const roundedTotal = totalAmount.toFixed(2);
 
-        expect(roundedTotal).not.toEqual(await storeConfigurePage.getOrderPrice('Monthly'));
-        orderSummaryMonthly = await storeConfigurePage.getOrderPrice('Monthly');
+        expect(roundedTotal).not.toEqual(storeConfigurePage.getOrderPrice('Monthly'));
         await storeConfigurePage.clickSummaryContinue();
 
         await storeReviewPage.assertProductNameVisible(productName);

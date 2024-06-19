@@ -34,9 +34,10 @@ export class StoreConfigurePage {
 
     async getAddonPrice(name: string): Promise<string> {
         const locators = this.createAddonLocators(name);
-        const priceText = await locators.price.textContent();
+        await locators.price.waitFor({state: 'visible'});
 
-        return priceText.replace(/[^\d.]/g, '');
+        const priceText = await locators.price.textContent();
+        return priceText ? priceText.replace(/[^\d.]/g, '') : '';
     }
 
     async getOrderPrice(name: string): Promise<string> {
